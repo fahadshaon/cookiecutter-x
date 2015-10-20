@@ -171,7 +171,9 @@ def copy_gen_files(out_dir):
             cpy(src_file, dst_dir)
 
 
-def process(path):
+@argh.arg('path', help="Path of cookiecutter template")
+@argh.arg('--extra-config', help="Extra configurations in json format.",  default='{}', type=json.loads)
+def process(path, extra_config=None):
     """
     Process cookiecutter template. This function assumes there is a ``cookiecutter.json`` in
     the local directory.
@@ -180,6 +182,9 @@ def process(path):
 
     :param path: Path to the template
     """
+    if not extra_config:
+        extra_config = {}
+
     path = os.path.normpath(path)
     logging.info('Processing cookie cutter template at: {}'.format(path))
 
@@ -190,6 +195,7 @@ def process(path):
 
     extra_context = read_json(local_cc)
     extra_context['ccx_output_directory'] = os.path.abspath('.')
+    extra_context.update(extra_config)
 
     logging.info('Read context data: ' + os.linesep + json.dumps(extra_context, indent=4))
 

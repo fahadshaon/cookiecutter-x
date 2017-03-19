@@ -12,6 +12,10 @@ from cookiecutter_modified import cookiecutter
 app_name_rx = re.compile('^[a-zA-Z][a-zA-Z0-9_]*$')
 
 
+def boolean(b):
+    return b in ['True', 'T', 'true', 't', 'Yes', 'Y', 'yes', 'y', '1', True]
+
+
 def read_json(p):
     """
     Read a JSON file
@@ -239,6 +243,14 @@ def init(name, name_title, description='', gitignore='True'):
         logging.info('Writing file: {}'.format(local_cc))
         f.write(content_json)
         f.write(os.linesep)
+
+    if boolean(gitignore):
+        gitignore_file = os.path.join(app_dir, '.gitignore')
+        logging.info('Writing file: {}'.format(gitignore_file))
+        with open(gitignore_file, 'w') as g:
+            g.write('.ccx_archive')
+            g.write(os.linesep)
+
 
 parser = argh.ArghParser()
 parser.add_commands([process, init])

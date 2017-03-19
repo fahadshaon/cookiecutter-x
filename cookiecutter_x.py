@@ -4,8 +4,12 @@ import argh
 import logging
 import shutil
 import hashlib
+import re
+from collections import OrderedDict
 
 from cookiecutter_modified import cookiecutter
+
+app_name_rx = re.compile('^[a-zA-Z][a-zA-Z0-9_]*$')
 
 
 def read_json(p):
@@ -172,7 +176,7 @@ def copy_gen_files(out_dir):
 
 
 @argh.arg('path', help="Path of cookiecutter template")
-@argh.arg('--extra-config', help="Extra configurations in json format.",  default='{}', type=json.loads)
+@argh.arg('--extra-config', help="Extra configurations in json format.", default='{}', type=json.loads)
 def process(path, extra_config=None):
     """
     Process cookiecutter template. This function assumes there is a ``cookiecutter.json`` in
@@ -208,8 +212,36 @@ def process(path, extra_config=None):
     copy_gen_files(out_dir)
 
 
+@argh.arg('-d', '--description', help="Description of the app", default='')
+@argh.arg('-g', '--gitignore', help="Generate/update .gitignore to skip .ccx_archive folder", default='True')
+def init(name, name_title, description='', gitignore='True'):
+    if not app_name_rx.match(name):
+        logging.error('App name can contain only alphabets, numbers, and underscore')
+        return
+
+    app_dir = os.path.join('.', name)
+    if os.path.exists(app_dir):
+        logging.error('App directory already exists')
+        return
+
+    logging.info('Creating directory: {}'.format(app_dir))
+    os.mkdir(app_dir, 0755)
+
+    local_cc = os.path.join(app_dir, 'cookiecutter.json')
+
+    content = OrderedDict()
+    content['app_name'] = name
+    content['app_name_title'] = name_title
+    content['app_description'] = description
+
+    with open(local_cc, 'w') as f:
+        content_json = json.dumps(content, indent=4)
+        logging.info('Writing file: {}'.format(local_cc))
+        f.write(content_json)
+        f.write(os.linesep)
+
 parser = argh.ArghParser()
-parser.add_commands([process])
+parser.add_commands([process, init])
 
 if __name__ == '__main__':
     logging_format = '[%(asctime)s] %(levelname)s: %(message)s'

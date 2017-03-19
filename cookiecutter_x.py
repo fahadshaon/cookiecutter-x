@@ -213,7 +213,13 @@ def process(path, extra_config=None):
     mkdirs(out_dir)
 
     cookiecutter(path, no_input=True, extra_context=extra_context, output_dir=out_dir)
-    copy_gen_files(out_dir)
+    gen_dir = os.path.join(out_dir, extra_context['app_name'])
+
+    if not os.path.exists(gen_dir):
+        logging.error('Generated output should be inside \'app_name\' directory.')
+        return
+
+    copy_gen_files(gen_dir)
 
 
 @argh.arg('-d', '--description', help="Description of the app", default='')

@@ -1,0 +1,35 @@
+application: {{cookiecutter.app_name | replace('_', '-')}}
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /robots.txt
+  static_files: {{cookiecutter.app_name}}/static/robots.txt
+  upload: useai/static/
+
+- url: .*
+  script: {{cookiecutter.app_name}}.{{cookiecutter.app_name}}.app
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: markupsafe
+  version: "0.15"
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- doc/.*
+- logs/.*
+- venv/.*
+- run\.py
+- requirements/.*
+- local_deploy.py
+- \.idea/.*
+- \.git/.*
+- \.gitignore

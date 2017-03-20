@@ -194,6 +194,12 @@ def process(path, extra_config=None):
     if not extra_config:
         extra_config = {}
 
+    if not os.path.exists(path):
+        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'example-templates', path)
+
+    if not os.path.exists(path):
+        logging.error("Path not found.")
+
     path = os.path.normpath(path)
     logging.info('Processing cookie cutter template at: {}'.format(path))
 

@@ -34,7 +34,7 @@ def mkdirs(p):
     :param p: Path to create
     """
     if not os.path.exists(p):
-        logging.info('Path does not exit, creating: {}'.format(p))
+        logging.info('Path does not exit, creating: {}'.format(os.path.normpath(p)))
         os.makedirs(p)
 
 
@@ -63,7 +63,7 @@ def cpy(src_file, dst_dir):
     """
 
     mkdirs(dst_dir)
-    logging.info('{} -> {}'.format(src_file, dst_dir))
+    logging.info('{} -> {}'.format(os.path.normpath(src_file), os.path.normpath(dst_dir)))
     shutil.copy(src_file, dst_dir)
 
 
@@ -145,7 +145,7 @@ def copy_gen_files(out_dir):
     A file in difference set means it is in source but not in destination, so we copy it directly.
     A file in intersection set means it is in both source and destination, now we first check whether
     these are same then do nothing.
-    Otherwise we create a back up of destination file and replace it with newly geneated file.
+    Otherwise we create a back up of destination file and replace it with newly generated file.
 
     :param out_dir: Output directory of cookiecutter generated output.
     """
@@ -174,7 +174,7 @@ def copy_gen_files(out_dir):
 
         else:
             np = find_unused_name(p)
-            logging.info('Moving old files: {} -> {}'.format(p, np))
+            logging.info('Moving old files: {} -> {}'.format(os.path.normpath(p), os.path.normpath(np)))
             shutil.copy(p, np)
             cpy(src_file, dst_dir)
 
@@ -189,6 +189,7 @@ def process(path, extra_config=None):
     If there is already a file then old file is backed up and replaced with new one.
 
     :param path: Path to the template
+    :param extra_config: Extra configurations as json string
     """
     if not extra_config:
         extra_config = {}
@@ -209,11 +210,11 @@ def process(path, extra_config=None):
 
     archive_path = '.ccx_archive'
     template_name = os.path.basename(path)
-    out_dir = os.path.join(archive_path, template_name)
+    out_dir = os.path.normpath(os.path.join(archive_path, template_name))
     mkdirs(out_dir)
 
     cookiecutter(path, no_input=True, extra_context=extra_context, output_dir=out_dir)
-    gen_dir = os.path.join(out_dir, extra_context['app_name'])
+    gen_dir = os.path.normpath(os.path.join(out_dir, extra_context['app_name']))
 
     if not os.path.exists(gen_dir):
         logging.error('Generated output should be inside \'app_name\' directory.')

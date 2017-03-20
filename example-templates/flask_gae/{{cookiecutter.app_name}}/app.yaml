@@ -7,7 +7,7 @@ threadsafe: yes
 handlers:
 - url: /robots.txt
   static_files: {{cookiecutter.app_name}}/static/robots.txt
-  upload: useai/static/
+  upload: {{cookiecutter.app_name}}/static/
 
 - url: .*
   script: {{cookiecutter.app_name}}.{{cookiecutter.app_name}}.app

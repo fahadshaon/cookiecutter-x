@@ -265,8 +265,35 @@ def init(name, name_title, description='', gitignore='True'):
             g.write(os.linesep)
 
 
+@argh.arg('-s', '--script-name', help="Generate argh script", default='run.py')
+@argh.arg('-c', '--colored-logs', help="Colored logs", default='False')
+def argh_script(script_name='run.py', colored_logs='False'):
+    if os.path.isabs(script_name):
+        out_path = script_name
+    else:
+        out_path = os.path.join('.', script_name)
+
+    if os.path.exists(out_path):
+        logging.error('Path exists.')
+        return
+
+    if boolean(colored_logs):
+        in_path = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            'data', 'argh_scripts', 'script_colored_logs.py'
+        )
+    else:
+        in_path = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            'data', 'argh_scripts', 'script_normal_logs.py'
+        )
+
+    logging.info('Creating argh script: {}'.format(out_path))
+    shutil.copyfile(in_path, out_path)
+
+
 parser = argh.ArghParser()
-parser.add_commands([process, init])
+parser.add_commands([process, init, argh_script])
 
 if __name__ == '__main__':
     logging_format = '[%(asctime)s] %(levelname)s: %(message)s'

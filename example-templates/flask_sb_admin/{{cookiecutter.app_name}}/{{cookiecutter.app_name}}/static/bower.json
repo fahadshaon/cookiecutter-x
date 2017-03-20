@@ -1,0 +1,7 @@
+{
+  "name": "{{cookiecutter.app_name}}",
+  "description": "Javascript and CSS dependencies of {{cookiecutter.app_name}}",
+  "dependencies": {
+    "blackrockdigital-startbootstrap-sb-admin-2": "3.3.7+1"
+  }
+}

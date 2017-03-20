@@ -5,6 +5,7 @@ from flask import request, session, g, redirect, url_for, \
 
 from core import app, project_relative_location
 
+
 @app.route('/')
 def home():
     return render_template('home.html')

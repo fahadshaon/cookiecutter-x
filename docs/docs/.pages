@@ -1,0 +1,6 @@
+nav:
+    - index.md
+    - installation.md
+    - configurations.md
+    - templates.md
+    - usage.md

@@ -9,13 +9,13 @@ from .core import config
 
 @cli.group(
     name="quick-start",
-    help="Generate sample configuration and template"
+    help="Generate example configuration and template"
 )
 def quick_start():
     pass
 
 
-def sample_config() -> str:
+def example_config() -> str:
     return '''simple_templates:
   paths:
     - ~/.cookiecutter-x/simple-templates
@@ -36,7 +36,7 @@ def generate_config():
         return
 
     utils.make_dirs(config.base_path)
-    utils.write_content(config.configs_path, sample_config())
+    utils.write_content(config.configs_path, example_config())
 
 
 def ccp_template_content() -> Dict[str, str]:
@@ -78,15 +78,15 @@ public:
 
 
 @quick_start.command(
-    name="sample-template",
-    help="Generate the cpp sample template from documentation"
+    name="example-template",
+    help="Generate the cpp example template from documentation"
 )
-def generate_sample_template():
-    sample_path = config.simple_template_paths[0]
-    cpp_template = os.path.join(sample_path, 'cpp')
+def generate_example_template():
+    example_path = config.simple_template_paths[0]
+    cpp_template = os.path.join(example_path, 'cpp')
 
     if os.path.exists(cpp_template) and len(os.listdir(cpp_template)) > 0:
-        logging.warning("CPP sample template exists; not overwriting")
+        logging.warning("CPP example template exists; not overwriting")
         return
 
     utils.make_dirs(cpp_template)

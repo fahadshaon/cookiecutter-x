@@ -26,28 +26,28 @@ Cookiecutter-X supports two types of templates.
 
 - Generate configurations (stored at `$HOME/.cookiecutter-x/ccx-config.yml`)
     ```shell
-    cookiecutter-x generate-config
+    cookiecutter-x quick-start config
     ```
 
 - Add or write templates
-  - Add sample template
+  - Create a simple example template for generating CPP header and class pair
     ```shell
-    cookiecutter-x add-samples
+    cookiecutter-x quick-start example-template
     ```
 
-- See a list of available simple templates
+- See the list of available simple templates
     ```shell
-    cookiecutter-x sample list
+    cookiecutter-x simple list
     ```
 
 - See the documentation of a template
     ```shell
-    cookiecutter-x sample doc cpp
+    cookiecutter-x simple doc cpp
     ```
 
 - Generate files based on a template
     ```shell
-    cookiecutter-x sample process cpp --class_name 'FilesUtils'
+    cookiecutter-x simple process cpp --class_name 'FilesUtils'
     ```
 
 Read more at the documentation site - <https://cookiecutter-x.shaon.dev>

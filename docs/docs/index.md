@@ -11,34 +11,36 @@ provide template input using arguments instead of interactive prompts.
     ```shell
     pip install cookiecutter-x
     ```
-
-- (Optional) add autocomplete for bash add `.bashrc` or any other profile file
-    ```shell
-    eval "$(_COOKIECUTTER_X_COMPLETE=bash_source cookiecutter-x)"`
-    ```
+    - You _should_ create a separate virtual environment for this project.
+    `virtualenvwrapper` is a great option for that.
+    - Add the cli script `cookiecutter-x` into a `$PATH` dir. Assuming `$HOME/bin` is in `$PATH`
+      ```shell
+      ccx="$(which cookiecutter-x)" && ln -t $HOME/bin "$ccx"
+      ```
+    - More at [Installation](installation.md)
 
 - Generate configurations (stored at `$HOME/.cookiecutter-x/ccx-config.yml`)
     ```shell
-    cookiecutter-x generate-config
+    cookiecutter-x quick-start config
     ```
 
 - Add or write templates
-  - Add sample template
+  - Create a simple example template for generating CPP header and class pair
     ```shell
-    cookiecutter-x generate-sample
+    cookiecutter-x quick-start example-template
     ```
 
 - See the list of available simple templates
     ```shell
-    cookiecutter-x sample list
+    cookiecutter-x simple list
     ```
 
 - See the documentation of a template
     ```shell
-    cookiecutter-x sample doc cpp
+    cookiecutter-x simple doc cpp
     ```
 
 - Generate files based on a template
     ```shell
-    cookiecutter-x sample process cpp --class_name 'FilesUtils'
+    cookiecutter-x simple process cpp --class_name 'FilesUtils'
     ```

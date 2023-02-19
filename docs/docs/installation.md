@@ -33,9 +33,17 @@ inside the virtualenv's bin directory. You can link this script into a `PATH` di
 
 Run the following with the virtualenv activated
 
-```shell
-ccx=$(which cookiecutter-x) && sudo ln -t /usr/local/bin $ccx
-```
+=== "local"
+    Assuming `$PATH` contains `$HOME/bin`.
+
+    ```shell
+    ccx="$(which cookiecutter-x)" && ln -t $HOME/bin "$ccx"
+    ```
+
+=== "system"
+    ```shell
+    ccx="$(which cookiecutter-x)" && sudo ln -t /usr/local/bin "$ccx"
+    ```
 
 Now you can deactivate the virtualenv and will still be able to execute `cookiecutter-x` command.
 

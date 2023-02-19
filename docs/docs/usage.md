@@ -1,22 +1,22 @@
 # Usage
 
 The `cookiecutter-x` CLI has three main groups of commands
-- `generate` - Generates sample configurations and templates
+- `quick-start`  Generate example configuration and template
 - `simple` - Manage and process simple templates
 - `cc` - Manage and process simple templates
 
-## Sample configurations and template generation
+## Generate configurations and template generation
 
-Generate simple configuration
+Generate configuration
 
 ```shell
-cookiecutter-x generate config
+cookiecutter-x quick-start config
 ```
 
 Generate the example simple template, i.e., the c++ header-implementation pair template
 
 ```shell
-cookiecutter-x generate sample-template
+cookiecutter-x quick-start example-template
 ```
 
 ## Template processing commands

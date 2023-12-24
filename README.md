@@ -50,4 +50,4 @@ Cookiecutter-X supports two types of templates.
     cookiecutter-x simple process cpp --class_name 'FilesUtils'
     ```
 
-Read more at the documentation site - <https://cookiecutter-x.shaon.dev>
+Read more at the documentation site - <https://fahadshaon.github.io/cookiecutter-x>

@@ -18,7 +18,8 @@ Usage:
     ${CMD} coverage             Run coverages and generate html reports
     ${CMD} build                Build the binary
 
-    ${CMD} docs-install         Create virtualenv (docs/venv) and install docs generation dependencies
+    ${CMD} docs-install [-r]    Create virtualenv (docs/venv) and install docs generation dependencies
+    ${CMD} docs-requirements    Generate the requirements.txt from doc generation venv
     ${CMD} docs-build           Generate the docs using mkdocs
     ${CMD} docs-serve           Serve the mkdocs
 
@@ -59,7 +60,7 @@ function create_virtual_env() {
 
     if [[ ${2-} == '-r' ]]; then
         echo "Installing requirements ${requirements} in ${venv}"
-        "${pip_bin}" install install -r "${requirements}"
+        "${pip_bin}" install -r "${requirements}"
     fi
 
     if [[ ${1-} == "app" ]]; then
@@ -107,7 +108,12 @@ function cmd-build() {
 }
 
 function cmd-docs-install() {
-    create_virtual_env "docs" -r
+    if [[ -z $* ]]; then
+        create_virtual_env "docs"
+        docs/venv/bin/pip install mkdocs mkdocs-material mkdocs-awesome-pages-plugin
+    else
+        create_virtual_env "docs" $@
+    fi
 }
 
 function cmd-docs-requirements() {
